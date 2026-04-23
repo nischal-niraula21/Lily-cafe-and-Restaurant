@@ -2,7 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useMemo, useState } from "react";
 import cabinImg from "@/assets/cabin.jpg";
+import cabinC1 from "@/assets/cabin-c1.jpg";
+import cabinC2 from "@/assets/cabin-c2.jpg";
+import cabinC3 from "@/assets/cabin-c3.jpg";
+import cabinC4 from "@/assets/cabin-c4.jpg";
+import cabinC5 from "@/assets/cabin-c5.jpg";
 import { Check, Users } from "lucide-react";
+
+const cabinImages: Record<"C1" | "C2" | "C3" | "C4" | "C5", string> = {
+  C1: cabinC1,
+  C2: cabinC2,
+  C3: cabinC3,
+  C4: cabinC4,
+  C5: cabinC5,
+};
 
 export const Route = createFileRoute("/cabins")({
   head: () => ({
