@@ -188,7 +188,7 @@ function MenuPage() {
           <p className="font-script text-4xl text-accent">Our Menu</p>
           <h1 className="text-5xl md:text-6xl mt-2">Flip through our kitchen</h1>
           <p className="mt-4 text-muted-foreground">
-            Click the arrows to turn the page.
+            Click the left side of the book to go back, the right side to go forward — or use the arrows.
           </p>
         </div>
 
