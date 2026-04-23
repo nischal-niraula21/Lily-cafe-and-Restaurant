@@ -26,8 +26,8 @@ export function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/85 backdrop-blur-md shadow-[var(--shadow-soft)] py-2"
-          : "bg-transparent py-4"
+          ? "bg-background/90 backdrop-blur-md shadow-[var(--shadow-soft)] py-2"
+          : "bg-gradient-to-b from-black/40 to-transparent py-4"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -37,11 +37,11 @@ export function Navbar() {
             alt="Lily Cafe & Restaurant"
             width={48}
             height={48}
-            className="h-12 w-12 rounded-full object-cover ring-2 ring-accent/40 group-hover:ring-accent transition"
+            className="h-12 w-12 rounded-full object-cover ring-2 ring-accent/60 group-hover:ring-accent transition"
           />
           <div className="leading-tight">
-            <div className="font-script text-2xl text-primary">Lily</div>
-            <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
+            <div className={`font-script text-2xl drop-shadow ${scrolled ? "text-primary" : "text-white"}`}>Lily</div>
+            <div className={`text-[10px] tracking-[0.25em] uppercase ${scrolled ? "text-muted-foreground" : "text-white/85"}`}>
               Cafe & Restaurant
             </div>
           </div>
@@ -52,8 +52,12 @@ export function Navbar() {
             <li key={l.to}>
               <Link
                 to={l.to}
-                className="text-sm uppercase tracking-widest text-foreground/80 hover:text-primary transition relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-primary hover:after:w-full after:transition-all"
-                activeProps={{ className: "text-primary after:w-full" }}
+                className={`text-sm uppercase tracking-widest font-medium drop-shadow-sm transition relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current hover:after:w-full after:transition-all ${
+                  scrolled
+                    ? "text-foreground hover:text-primary"
+                    : "text-white hover:text-accent"
+                }`}
+                activeProps={{ className: "after:w-full" }}
               >
                 {l.label}
               </Link>

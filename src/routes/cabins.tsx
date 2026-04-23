@@ -119,7 +119,7 @@ function CabinsPage() {
                 </div>
                 <button
                   disabled={booked}
-                  onClick={() => setSelected(c.id)}
+                  onClick={() => setSelected((prev) => (prev === c.id ? null : c.id))}
                   className={`mt-6 w-full rounded-full py-3 text-sm font-medium transition ${
                     booked
                       ? "bg-muted-foreground/20 cursor-not-allowed"

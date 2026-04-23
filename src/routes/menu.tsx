@@ -28,31 +28,39 @@ type PageContent = {
 
 const pages: PageContent[] = [
   {
-    title: "Pure Veg",
+    title: "Pure Veg Starters",
     subtitle: "Crispy · fresh · soulful",
     items: [
-      { name: "Veg Pakora", price: "180", note: "Crunchy chickpea fritters" },
+      { name: "Veg Pakora", price: "180", note: "Mixed vegetable fritters" },
+      { name: "Onion Rings", price: "200" },
       { name: "Chauchau Sadheko", price: "160", note: "Spicy noodle salad" },
       { name: "Aloo Sadheko", price: "150" },
       { name: "Aloo Tareko", price: "170" },
-      { name: "Paneer Chilly", price: "280" },
+      { name: "Paneer Chilly (Dry/Gravy)", price: "320" },
+      { name: "Paneer Tikka", price: "340" },
       { name: "Veg Spring Roll", price: "220" },
+      { name: "French Fries", price: "180" },
+      { name: "Chilly Mushroom", price: "280" },
     ],
   },
   {
-    title: "Chicken",
+    title: "Chicken Specials",
     subtitle: "Marinated · grilled · tender",
     items: [
-      { name: "Chicken Chilly", price: "340" },
+      { name: "Chicken Chilly (Dry/Gravy)", price: "340" },
       { name: "Chicken Sadheko", price: "320" },
+      { name: "Chicken Sekuwa", price: "380" },
       { name: "Chicken Fry", price: "360" },
       { name: "Chicken Sizzler", price: "520" },
       { name: "Butter Chicken", price: "480" },
+      { name: "Chicken Tikka Masala", price: "460" },
       { name: "Chicken Curry", price: "380" },
+      { name: "Chicken Lollipop", price: "420" },
+      { name: "Tandoori Chicken (Half/Full)", price: "550 / 950" },
     ],
   },
   {
-    title: "Mutton",
+    title: "Mutton Delights",
     subtitle: "Slow cooked · rich · hearty",
     items: [
       { name: "Mutton Curry", price: "520" },
@@ -60,30 +68,71 @@ const pages: PageContent[] = [
       { name: "Mutton Chilly", price: "540" },
       { name: "Mutton Sekuwa", price: "560" },
       { name: "Mutton Fry", price: "500" },
+      { name: "Mutton Bhutuwa", price: "540" },
+      { name: "Mutton Rogan Josh", price: "580" },
+      { name: "Mutton Thali", price: "650", note: "Served with rice, dal, papad" },
     ],
   },
   {
     title: "Street Favorites",
-    subtitle: "Our house specials",
+    subtitle: "Momo · Chowmein · Thukpa",
     items: [
-      { name: "Chicken Momo", price: "180", note: "Steamed · Fried · Jhol" },
-      { name: "Veg Momo", price: "150" },
+      { name: "Veg Momo (Steam/Fry/Jhol)", price: "140" },
+      { name: "Chicken Momo (Steam/Fry/Jhol)", price: "180" },
+      { name: "Buff Momo", price: "160" },
+      { name: "C-Momo (Chilly Momo)", price: "220" },
+      { name: "Veg Chowmein", price: "170" },
       { name: "Chicken Chowmein", price: "200" },
-      { name: "Veg Noodles", price: "170" },
-      { name: "Chicken Thukpa", price: "220" },
+      { name: "Mixed Chowmein", price: "230" },
       { name: "Veg Thukpa", price: "190" },
+      { name: "Chicken Thukpa", price: "220" },
+      { name: "Wai Wai Sadheko", price: "120" },
     ],
   },
   {
-    title: "Soft Drinks & Mocktails",
-    subtitle: "Fresh · fruity · cooling",
+    title: "Rice & Bread",
+    subtitle: "From the tandoor & wok",
+    items: [
+      { name: "Steamed Rice", price: "120" },
+      { name: "Jeera Rice", price: "180" },
+      { name: "Veg Fried Rice", price: "220" },
+      { name: "Chicken Fried Rice", price: "260" },
+      { name: "Veg Biryani", price: "320" },
+      { name: "Chicken Biryani", price: "380" },
+      { name: "Plain Naan", price: "60" },
+      { name: "Butter Naan", price: "80" },
+      { name: "Garlic Naan", price: "100" },
+      { name: "Tandoori Roti", price: "40" },
+    ],
+  },
+  {
+    title: "Soft Drinks & Hot Beverages",
+    subtitle: "Coffee · tea · refreshments",
     items: [
       { name: "Coca-Cola / Sprite / Fanta", price: "80" },
-      { name: "Fresh Lime Soda", price: "120" },
+      { name: "Mineral Water (1L)", price: "60" },
+      { name: "Milk Tea", price: "50" },
+      { name: "Black Tea / Lemon Tea", price: "40" },
+      { name: "Masala Tea", price: "70" },
+      { name: "Espresso", price: "120" },
+      { name: "Cappuccino", price: "180" },
+      { name: "Cafe Latte", price: "200" },
+      { name: "Hot Chocolate", price: "220" },
+      { name: "Fresh Lime Soda (Sweet/Salt)", price: "120" },
+    ],
+  },
+  {
+    title: "Mocktails",
+    subtitle: "Fresh · fruity · zero proof",
+    items: [
       { name: "Virgin Mojito", price: "220" },
       { name: "Strawberry Breeze", price: "260" },
       { name: "Mango Sunrise", price: "260" },
-      { name: "Blueberry Mint", price: "280" },
+      { name: "Blueberry Mint Cooler", price: "280" },
+      { name: "Pina Colada (Virgin)", price: "280" },
+      { name: "Shirley Temple", price: "240" },
+      { name: "Watermelon Cooler", price: "240" },
+      { name: "Lily Special Punch", price: "300", note: "House signature" },
     ],
   },
   {
@@ -91,15 +140,19 @@ const pages: PageContent[] = [
     subtitle: "Hand-shaken · 21+",
     items: [
       { name: "Classic Mojito", price: "380" },
-      { name: "Margarita", price: "420" },
+      { name: "Margarita (Classic/Strawberry)", price: "420" },
       { name: "Old Fashioned", price: "480" },
-      { name: "Piña Colada", price: "440" },
+      { name: "Pina Colada", price: "440" },
       { name: "Whiskey Sour", price: "460" },
       { name: "Long Island Iced Tea", price: "520" },
+      { name: "Cosmopolitan", price: "450" },
+      { name: "Bloody Mary", price: "440" },
+      { name: "Tequila Sunrise", price: "460" },
+      { name: "Lily Signature Martini", price: "550" },
     ],
   },
   {
-    title: "Ice Creams & Sweet Endings",
+    title: "Ice Creams & Desserts",
     subtitle: "The perfect finale",
     items: [
       { name: "Vanilla Scoop", price: "120" },
@@ -108,6 +161,10 @@ const pages: PageContent[] = [
       { name: "Sundae Special", price: "280" },
       { name: "Brownie with Ice Cream", price: "320" },
       { name: "Kulfi Falooda", price: "240" },
+      { name: "Gulab Jamun (2 pcs)", price: "140" },
+      { name: "Cheesecake Slice", price: "280" },
+      { name: "Tiramisu", price: "320" },
+      { name: "Banana Split", price: "300" },
     ],
   },
 ];
@@ -131,7 +188,7 @@ function MenuPage() {
           <p className="font-script text-4xl text-accent">Our Menu</p>
           <h1 className="text-5xl md:text-6xl mt-2">Flip through our kitchen</h1>
           <p className="mt-4 text-muted-foreground">
-            Click the arrows to turn the page.
+            Click the left side of the book to go back, the right side to go forward — or use the arrows.
           </p>
         </div>
 
@@ -147,7 +204,6 @@ function MenuPage() {
 
           <div
             className="flipbook relative w-full max-w-3xl aspect-[3/4] md:aspect-[4/3]"
-            onClick={next}
           >
             {/* Stacked pages */}
             {Array.from({ length: totalPages }).map((_, i) => {
@@ -156,7 +212,7 @@ function MenuPage() {
               return (
                 <div
                   key={i}
-                  className={`flipbook-page cursor-pointer select-none ${flipped ? "flipped" : ""}`}
+                  className={`flipbook-page select-none ${flipped ? "flipped" : ""}`}
                   style={{ zIndex: flipped ? i : zIndex }}
                 >
                   <PageFace index={i} side="front" />
@@ -164,8 +220,21 @@ function MenuPage() {
                 </div>
               );
             })}
+            {/* Click zones for page turn */}
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous page"
+              className="absolute inset-y-0 left-0 w-1/2 z-[100] cursor-w-resize bg-transparent"
+            />
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next page"
+              className="absolute inset-y-0 right-0 w-1/2 z-[100] cursor-e-resize bg-transparent"
+            />
             {/* Spine shadow overlay */}
-            <div className="flipbook-spine absolute inset-y-0 left-0 w-2" />
+            <div className="flipbook-spine absolute inset-y-0 left-1/2 w-2 -translate-x-1/2 z-[101] pointer-events-none" />
           </div>
 
           <button
