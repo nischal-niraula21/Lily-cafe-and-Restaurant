@@ -65,45 +65,45 @@
 :root {
   --radius: 0.75rem;
 
-  /* Cozy cafe palette */
-  --cream: oklch(0.97 0.02 85);
-  --sage: oklch(0.78 0.05 145);
-  --rose: oklch(0.82 0.09 20);
-  --cocoa: oklch(0.32 0.05 40);
-  --gold: oklch(0.78 0.12 75);
+  /* Noir & Gold palette — upscale, intimate dining */
+  --cream: oklch(0.94 0.02 85);
+  --sage: oklch(0.55 0.04 75);
+  --rose: oklch(0.78 0.12 75);
+  --cocoa: oklch(0.15 0.01 60);
+  --gold: oklch(0.82 0.13 80);
 
-  --background: oklch(0.97 0.02 85);
-  --foreground: oklch(0.28 0.04 40);
-  --card: oklch(0.99 0.01 85);
-  --card-foreground: oklch(0.28 0.04 40);
-  --popover: oklch(0.99 0.01 85);
-  --popover-foreground: oklch(0.28 0.04 40);
-  --primary: oklch(0.42 0.07 35);
-  --primary-foreground: oklch(0.97 0.02 85);
-  --secondary: oklch(0.88 0.04 80);
-  --secondary-foreground: oklch(0.32 0.05 40);
-  --muted: oklch(0.93 0.02 80);
-  --muted-foreground: oklch(0.5 0.03 50);
-  --accent: oklch(0.82 0.09 20);
-  --accent-foreground: oklch(0.28 0.04 40);
+  --background: oklch(0.13 0.005 60);
+  --foreground: oklch(0.94 0.02 85);
+  --card: oklch(0.18 0.008 60);
+  --card-foreground: oklch(0.94 0.02 85);
+  --popover: oklch(0.18 0.008 60);
+  --popover-foreground: oklch(0.94 0.02 85);
+  --primary: oklch(0.82 0.13 80);
+  --primary-foreground: oklch(0.13 0.005 60);
+  --secondary: oklch(0.22 0.01 60);
+  --secondary-foreground: oklch(0.94 0.02 85);
+  --muted: oklch(0.22 0.01 60);
+  --muted-foreground: oklch(0.7 0.02 80);
+  --accent: oklch(0.78 0.13 75);
+  --accent-foreground: oklch(0.13 0.005 60);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.97 0.02 85);
-  --border: oklch(0.88 0.03 70);
-  --input: oklch(0.9 0.025 75);
-  --ring: oklch(0.78 0.12 75);
-  --chart-1: oklch(0.78 0.12 75);
-  --chart-2: oklch(0.78 0.05 145);
-  --chart-3: oklch(0.82 0.09 20);
-  --chart-4: oklch(0.42 0.07 35);
-  --chart-5: oklch(0.6 0.08 50);
-  --sidebar: oklch(0.97 0.02 85);
-  --sidebar-foreground: oklch(0.28 0.04 40);
-  --sidebar-primary: oklch(0.42 0.07 35);
-  --sidebar-primary-foreground: oklch(0.97 0.02 85);
-  --sidebar-accent: oklch(0.88 0.04 80);
-  --sidebar-accent-foreground: oklch(0.32 0.05 40);
-  --sidebar-border: oklch(0.88 0.03 70);
-  --sidebar-ring: oklch(0.78 0.12 75);
+  --destructive-foreground: oklch(0.94 0.02 85);
+  --border: oklch(0.28 0.012 70);
+  --input: oklch(0.22 0.01 60);
+  --ring: oklch(0.82 0.13 80);
+  --chart-1: oklch(0.82 0.13 80);
+  --chart-2: oklch(0.55 0.04 75);
+  --chart-3: oklch(0.78 0.12 75);
+  --chart-4: oklch(0.94 0.02 85);
+  --chart-5: oklch(0.6 0.08 70);
+  --sidebar: oklch(0.13 0.005 60);
+  --sidebar-foreground: oklch(0.94 0.02 85);
+  --sidebar-primary: oklch(0.82 0.13 80);
+  --sidebar-primary-foreground: oklch(0.13 0.005 60);
+  --sidebar-accent: oklch(0.22 0.01 60);
+  --sidebar-accent-foreground: oklch(0.94 0.02 85);
+  --sidebar-border: oklch(0.28 0.012 70);
+  --sidebar-ring: oklch(0.82 0.13 80);
 }
 
 .dark {
@@ -142,8 +142,8 @@
     color: var(--color-foreground);
     font-family: var(--font-body);
     background-image:
-      radial-gradient(circle at 15% 20%, color-mix(in oklab, var(--rose) 10%, transparent), transparent 50%),
-      radial-gradient(circle at 85% 80%, color-mix(in oklab, var(--sage) 12%, transparent), transparent 50%);
+      radial-gradient(circle at 15% 20%, color-mix(in oklab, var(--gold) 8%, transparent), transparent 50%),
+      radial-gradient(circle at 85% 80%, color-mix(in oklab, var(--gold) 6%, transparent), transparent 55%);
     background-attachment: fixed;
   }
 
@@ -177,9 +177,10 @@
   transform-style: preserve-3d;
   transform-origin: left center;
   transition: transform 0.9s cubic-bezier(0.65, 0.05, 0.36, 1);
-  background: linear-gradient(135deg, oklch(0.98 0.015 80), oklch(0.94 0.03 75));
+  background: linear-gradient(135deg, oklch(0.96 0.02 85), oklch(0.9 0.03 80));
   box-shadow: var(--shadow-page);
   border-radius: 4px 14px 14px 4px;
+  color: oklch(0.18 0.01 60);
 }
 
 .flipbook-page.flipped {
@@ -197,6 +198,13 @@
   border-radius: inherit;
   background:
     linear-gradient(135deg, oklch(0.98 0.015 80), oklch(0.94 0.03 75));
+}
+
+.flipbook-page .page-front,
+.flipbook-page .page-back {
+  background:
+    linear-gradient(135deg, oklch(0.96 0.02 85), oklch(0.9 0.03 80));
+  color: oklch(0.18 0.01 60);
 }
 
 .flipbook-page .page-back {
