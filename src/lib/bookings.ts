@@ -1,53 +1,59 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export type CabinId = "C1" | "C2" | "C3" | "C4" | "C5";
 export const CABIN_IDS: CabinId[] = ["C1", "C2", "C3", "C4", "C5"];
-
 export type Bookings = Record<CabinId, boolean>;
 
-const STORAGE_KEY = "lily-cabin-bookings";
+const empty: Bookings = { C1: false, C2: false, C3: false, C4: false, C5: false };
 
-const defaults: Bookings = { C1: false, C2: true, C3: false, C4: false, C5: true };
+export function useBookings() {
+  const [bookings, setBookings] = useState<Bookings>(empty);
+  const [loading, setLoading] = useState(true);
 
-function read(): Bookings {
-  if (typeof window === "undefined") return defaults;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaults;
-    return { ...defaults, ...JSON.parse(raw) };
-  } catch {
-    return defaults;
-  }
-}
-
-function write(b: Bookings) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(b));
-  window.dispatchEvent(new CustomEvent("bookings-changed"));
-}
-
-export function useBookings(): [Bookings, (b: Bookings) => void] {
-  const [bookings, setBookingsState] = useState<Bookings>(defaults);
-
-  useEffect(() => {
-    setBookingsState(read());
-    const sync = () => setBookingsState(read());
-    window.addEventListener("bookings-changed", sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener("bookings-changed", sync);
-      window.removeEventListener("storage", sync);
-    };
+  const refresh = useCallback(async () => {
+    const { data, error } = await supabase.from("cabin_bookings").select("cabin_id, is_booked");
+    if (!error && data) {
+      const map = { ...empty };
+      for (const row of data) {
+        if (CABIN_IDS.includes(row.cabin_id as CabinId)) {
+          map[row.cabin_id as CabinId] = row.is_booked;
+        }
+      }
+      setBookings(map);
+    }
+    setLoading(false);
   }, []);
 
-  const setBookings = (b: Bookings) => {
-    setBookingsState(b);
-    write(b);
-  };
+  useEffect(() => {
+    refresh();
+    // Realtime subscription so all viewers see updates immediately
+    const channel = supabase
+      .channel("cabin_bookings_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "cabin_bookings" },
+        () => refresh()
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [refresh]);
 
-  return [bookings, setBookings];
+  return { bookings, loading, refresh };
 }
 
-export function resetBookings() {
-  write({ C1: false, C2: false, C3: false, C4: false, C5: false });
+export async function setCabinBooked(id: CabinId, isBooked: boolean) {
+  const { error } = await supabase
+    .from("cabin_bookings")
+    .update({ is_booked: isBooked, updated_at: new Date().toISOString() })
+    .eq("cabin_id", id);
+  if (error) throw error;
+}
+
+export async function freeAllCabins() {
+  for (const id of CABIN_IDS) {
+    await setCabinBooked(id, false);
+  }
 }
