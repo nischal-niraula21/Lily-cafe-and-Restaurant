@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { useBookings, setCabinBooked, freeAllCabins, CABIN_IDS, type CabinId } from "@/lib/bookings";
 import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { RotateCcw, CheckCircle2, XCircle, LogOut, Lock } from "lucide-react";
+import { RotateCcw, CheckCircle2, XCircle, LogOut, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import cabinC1 from "@/assets/cabin-c1.webp";
@@ -49,14 +49,20 @@ function AdminPage() {
 function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
   const [busy, setBusy] = useState(false);
 
   const handle = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
     try {
-      if (mode === "signin") {
+      if (mode === "reset") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast.success("Password reset link sent. Check your email.");
+      } else if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         toast.success("Signed in");
@@ -67,7 +73,7 @@ function LoginCard() {
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
         if (error) throw error;
-        toast.success("Account created. You may need to confirm your email.");
+        toast.success("Account created. If this email already existed, use your original password or reset it.");
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
@@ -87,7 +93,7 @@ function LoginCard() {
           </div>
           <h1 className="text-3xl mt-1 mb-2">Admin login</h1>
           <p className="text-sm text-muted-foreground mb-6">
-            Sign in to manage cabin bookings.
+            {mode === "reset" ? "Enter your email to reset your password." : "Sign in to manage cabin bookings."}
           </p>
           <form onSubmit={handle} className="space-y-4">
             <input
@@ -98,31 +104,43 @@ function LoginCard() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-ring"
             />
-            <input
-              required
-              type="password"
-              placeholder="Password (min 6 characters)"
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-ring"
-            />
+            {mode !== "reset" && (
+              <input
+                required
+                type="password"
+                placeholder="Password (min 6 characters)"
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-ring"
+              />
+            )}
             <button
               type="submit"
               disabled={busy}
               className="w-full rounded-full bg-primary text-primary-foreground py-3 text-sm font-medium hover:bg-primary/90 transition disabled:opacity-50"
             >
-              {busy ? "…" : mode === "signin" ? "Sign in" : "Create account"}
+              {busy ? "…" : mode === "reset" ? "Send reset link" : mode === "signin" ? "Sign in" : "Create account"}
             </button>
           </form>
-          <button
-            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-            className="mt-4 w-full text-xs text-muted-foreground hover:text-foreground transition"
-          >
-            {mode === "signin"
-              ? "First time? Create an account"
-              : "Have an account? Sign in"}
-          </button>
+          <div className="mt-4 grid gap-2 text-center">
+            {mode === "signin" && (
+              <button
+                onClick={() => setMode("reset")}
+                className="inline-flex items-center justify-center gap-1 text-xs text-muted-foreground hover:text-foreground transition"
+              >
+                <Mail className="size-3" /> Forgot password?
+              </button>
+            )}
+            <button
+              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              className="text-xs text-muted-foreground hover:text-foreground transition"
+            >
+              {mode === "signin"
+                ? "First time? Create an account"
+                : "Have an account? Sign in"}
+            </button>
+          </div>
         </div>
       </section>
     </Layout>
