@@ -34,18 +34,8 @@ export const Route = createFileRoute("/cabins")({
   component: CabinsPage,
 });
 
-type CabinId = "C1" | "C2" | "C3" | "C4" | "C5";
-
-const initialBookings: Record<CabinId, boolean> = {
-  C1: false,
-  C2: true,
-  C3: false,
-  C4: false,
-  C5: true,
-};
-
 function CabinsPage() {
-  const [bookings, setBookings] = useState(initialBookings);
+  const [bookings, setBookings] = useBookings();
   const [selected, setSelected] = useState<CabinId | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "" });
   const [confirmed, setConfirmed] = useState<null | {
