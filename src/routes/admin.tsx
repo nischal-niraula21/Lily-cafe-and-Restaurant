@@ -55,20 +55,21 @@ function LoginCard() {
   const handle = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
+    const normalizedEmail = email.trim();
     try {
       if (mode === "reset") {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        const { error } = await supabase.auth.resetPasswordForEmail(normalizedEmail, {
           redirectTo: `${window.location.origin}/reset-password`,
         });
         if (error) throw error;
         toast.success("Password reset link sent. Check your email.");
       } else if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email: normalizedEmail, password });
         if (error) throw error;
         toast.success("Signed in");
       } else {
         const { error } = await supabase.auth.signUp({
-          email,
+          email: normalizedEmail,
           password,
           options: { emailRedirectTo: `${window.location.origin}/admin` },
         });
@@ -77,6 +78,10 @@ function LoginCard() {
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
+      if (message.toLowerCase().includes("invalid login")) {
+        toast.error("Wrong email or password. If you already created this account, use Forgot password.");
+        return;
+      }
       toast.error(message);
     } finally {
       setBusy(false);
