@@ -8,6 +8,7 @@ import cabinC3 from "@/assets/cabin-c3.jpg";
 import cabinC4 from "@/assets/cabin-c4.jpg";
 import cabinC5 from "@/assets/cabin-c5.jpg";
 import { Check, Users } from "lucide-react";
+import { useBookings, type CabinId } from "@/lib/bookings";
 
 const cabinImages: Record<"C1" | "C2" | "C3" | "C4" | "C5", string> = {
   C1: cabinC1,
