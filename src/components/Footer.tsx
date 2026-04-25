@@ -38,7 +38,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-primary-foreground/15 py-5 text-center text-xs opacity-70">
-        © {new Date().getFullYear()} Lily Cafe & Restaurant. Crafted with warmth.
+        © {new Date().getFullYear()} Lily Cafe & Restaurant. Crafted with warmth and love from Nischal.
       </div>
     </footer>
   );
