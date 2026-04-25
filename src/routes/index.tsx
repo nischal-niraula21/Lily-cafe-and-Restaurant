@@ -30,6 +30,8 @@ function Home() {
           alt="Lily Cafe interior"
           width={1920}
           height={1280}
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-background" />
