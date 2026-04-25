@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import heroImg from "@/assets/hero-cafe.jpg";
-import foodImg from "@/assets/food.jpg";
+import heroImg from "@/assets/hero-cafe.webp";
+import foodImg from "@/assets/food.webp";
 import { BookOpen, Coffee, Leaf, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/")({
