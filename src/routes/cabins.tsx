@@ -8,7 +8,8 @@ import cabinC3 from "@/assets/cabin-c3.jpg";
 import cabinC4 from "@/assets/cabin-c4.jpg";
 import cabinC5 from "@/assets/cabin-c5.jpg";
 import { Check, Users } from "lucide-react";
-import { useBookings, type CabinId } from "@/lib/bookings";
+import { useBookings, setCabinBooked, type CabinId } from "@/lib/bookings";
+import { toast } from "sonner";
 
 const cabinImages: Record<"C1" | "C2" | "C3" | "C4" | "C5", string> = {
   C1: cabinC1,
@@ -35,7 +36,7 @@ export const Route = createFileRoute("/cabins")({
 });
 
 function CabinsPage() {
-  const [bookings, setBookings] = useBookings();
+  const { bookings } = useBookings();
   const [selected, setSelected] = useState<CabinId | null>(null);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "" });
   const [confirmed, setConfirmed] = useState<null | {
@@ -55,14 +56,19 @@ function CabinsPage() {
     []
   );
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selected) return;
     if (bookings[selected]) return;
-    setBookings({ ...bookings, [selected]: true });
-    setConfirmed({ name: form.name, cabin: selected, date: form.date, time: form.time });
-    setForm({ name: "", phone: "", date: "", time: "" });
-    setSelected(null);
+    try {
+      await setCabinBooked(selected, true);
+      setConfirmed({ name: form.name, cabin: selected, date: form.date, time: form.time });
+      setForm({ name: "", phone: "", date: "", time: "" });
+      setSelected(null);
+    } catch (err) {
+      toast.error("Could not complete booking. Please try again.");
+      console.error(err);
+    }
   };
 
   return (

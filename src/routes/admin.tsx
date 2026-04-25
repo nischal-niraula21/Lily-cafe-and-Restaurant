@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useBookings, CABIN_IDS, resetBookings, type CabinId } from "@/lib/bookings";
-import { RotateCcw, CheckCircle2, XCircle } from "lucide-react";
+import { useBookings, setCabinBooked, freeAllCabins, CABIN_IDS, type CabinId } from "@/lib/bookings";
+import { useAuth } from "@/lib/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { RotateCcw, CheckCircle2, XCircle, LogOut, Lock } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import cabinC1 from "@/assets/cabin-c1.jpg";
 import cabinC2 from "@/assets/cabin-c2.jpg";
 import cabinC3 from "@/assets/cabin-c3.jpg";
@@ -16,7 +20,7 @@ export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
       { title: "Admin — Lily Cafe & Restaurant" },
-      { name: "description", content: "Manage cabin bookings." },
+      { name: "description", content: "Staff login to manage cabin bookings." },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),
@@ -24,11 +28,157 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
-  const [bookings, setBookings] = useBookings();
+  const { user, isAdmin, loading } = useAuth();
 
-  const toggle = (id: CabinId) => setBookings({ ...bookings, [id]: !bookings[id] });
-  const markAll = (val: boolean) =>
-    setBookings(CABIN_IDS.reduce((acc, id) => ({ ...acc, [id]: val }), {} as Record<CabinId, boolean>));
+  if (loading) {
+    return (
+      <Layout>
+        <div className="max-w-md mx-auto px-6 pt-40 pb-20 text-center text-muted-foreground">
+          Loading…
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) return <LoginCard />;
+  if (!isAdmin) return <NotAdminCard email={user.email ?? ""} />;
+
+  return <AdminDashboard />;
+}
+
+function LoginCard() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [busy, setBusy] = useState(false);
+
+  const handle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        toast.success("Signed in");
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: `${window.location.origin}/admin` },
+        });
+        if (error) throw error;
+        toast.success("Account created. You may need to confirm your email.");
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      toast.error(message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Layout>
+      <section className="max-w-md mx-auto px-6 pt-32 pb-20">
+        <div className="rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-soft)]">
+          <div className="flex items-center gap-2 text-accent">
+            <Lock className="size-5" />
+            <p className="font-script text-2xl">Staff only</p>
+          </div>
+          <h1 className="text-3xl mt-1 mb-2">Admin login</h1>
+          <p className="text-sm text-muted-foreground mb-6">
+            Sign in to manage cabin bookings.
+          </p>
+          <form onSubmit={handle} className="space-y-4">
+            <input
+              required
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-ring"
+            />
+            <input
+              required
+              type="password"
+              placeholder="Password (min 6 characters)"
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-ring"
+            />
+            <button
+              type="submit"
+              disabled={busy}
+              className="w-full rounded-full bg-primary text-primary-foreground py-3 text-sm font-medium hover:bg-primary/90 transition disabled:opacity-50"
+            >
+              {busy ? "…" : mode === "signin" ? "Sign in" : "Create account"}
+            </button>
+          </form>
+          <button
+            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+            className="mt-4 w-full text-xs text-muted-foreground hover:text-foreground transition"
+          >
+            {mode === "signin"
+              ? "First time? Create an account"
+              : "Have an account? Sign in"}
+          </button>
+        </div>
+      </section>
+    </Layout>
+  );
+}
+
+function NotAdminCard({ email }: { email: string }) {
+  return (
+    <Layout>
+      <section className="max-w-md mx-auto px-6 pt-32 pb-20 text-center">
+        <div className="rounded-3xl bg-card border border-border p-8">
+          <Lock className="size-8 mx-auto text-accent mb-3" />
+          <h1 className="text-2xl mb-2">Not authorized</h1>
+          <p className="text-sm text-muted-foreground mb-6">
+            Signed in as <span className="text-foreground">{email}</span>, but this account is not an admin.
+            Ask the owner to grant the admin role from the Cloud dashboard.
+          </p>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm hover:bg-muted transition"
+          >
+            <LogOut className="size-4" /> Sign out
+          </button>
+        </div>
+      </section>
+    </Layout>
+  );
+}
+
+function AdminDashboard() {
+  const { bookings, loading } = useBookings();
+  const { user } = useAuth();
+  const [busy, setBusy] = useState(false);
+
+  const toggle = async (id: CabinId) => {
+    setBusy(true);
+    try {
+      await setCabinBooked(id, !bookings[id]);
+    } catch {
+      toast.error("Update failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const refresh = async () => {
+    setBusy(true);
+    try {
+      await freeAllCabins();
+      toast.success("All cabins are now available");
+    } catch {
+      toast.error("Could not refresh");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const bookedCount = CABIN_IDS.filter((id) => bookings[id]).length;
 
@@ -40,21 +190,23 @@ function AdminPage() {
             <p className="font-script text-3xl text-accent">Admin</p>
             <h1 className="text-4xl md:text-5xl">Manage cabin bookings</h1>
             <p className="mt-3 text-muted-foreground">
-              {bookedCount} of {CABIN_IDS.length} cabins currently booked.
+              {loading ? "Loading…" : `${bookedCount} of ${CABIN_IDS.length} cabins currently booked.`}
+              {user?.email && <span className="ml-2 text-xs">· {user.email}</span>}
             </p>
           </div>
           <div className="flex gap-3">
             <button
-              onClick={() => resetBookings()}
-              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium hover:bg-primary/90 transition"
+              onClick={refresh}
+              disabled={busy}
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-medium hover:bg-primary/90 transition disabled:opacity-50"
             >
               <RotateCcw className="size-4" /> Refresh (free all)
             </button>
             <button
-              onClick={() => markAll(true)}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted transition"
+              onClick={() => supabase.auth.signOut()}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm hover:bg-muted transition"
             >
-              Mark all booked
+              <LogOut className="size-4" /> Sign out
             </button>
           </div>
         </div>
@@ -86,10 +238,11 @@ function AdminPage() {
                     {id}
                   </div>
                 </div>
-                <div className="p-4 flex gap-2">
+                <div className="p-4">
                   <button
                     onClick={() => toggle(id)}
-                    className={`flex-1 inline-flex items-center justify-center gap-2 rounded-full py-2.5 text-sm font-medium transition ${
+                    disabled={busy}
+                    className={`w-full inline-flex items-center justify-center gap-2 rounded-full py-2.5 text-sm font-medium transition disabled:opacity-50 ${
                       booked
                         ? "bg-muted hover:bg-muted/80"
                         : "bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -106,10 +259,6 @@ function AdminPage() {
             );
           })}
         </div>
-
-        <p className="mt-10 text-xs text-muted-foreground">
-          Note: bookings are stored in your browser (localStorage). Use "Refresh" to clear all bookings at the start of a new day.
-        </p>
       </section>
     </Layout>
   );
