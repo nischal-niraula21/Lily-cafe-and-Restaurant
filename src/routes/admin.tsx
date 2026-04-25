@@ -6,11 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { RotateCcw, CheckCircle2, XCircle, LogOut, Lock } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import cabinC1 from "@/assets/cabin-c1.jpg";
-import cabinC2 from "@/assets/cabin-c2.jpg";
-import cabinC3 from "@/assets/cabin-c3.jpg";
-import cabinC4 from "@/assets/cabin-c4.jpg";
-import cabinC5 from "@/assets/cabin-c5.jpg";
+import cabinC1 from "@/assets/cabin-c1.webp";
+import cabinC2 from "@/assets/cabin-c2.webp";
+import cabinC3 from "@/assets/cabin-c3.webp";
+import cabinC4 from "@/assets/cabin-c4.webp";
+import cabinC5 from "@/assets/cabin-c5.webp";
 
 const cabinImages: Record<CabinId, string> = {
   C1: cabinC1, C2: cabinC2, C3: cabinC3, C4: cabinC4, C5: cabinC5,
