@@ -32,7 +32,7 @@ export function Footer() {
 
         <div>
           <h4 className="text-sm uppercase tracking-widest opacity-70 mb-4">Visit</h4>
-          <p className="text-sm opacity-90">Main Street, City Center</p>
+          <p className="text-sm opacity-90">Chandragadhi, Leknath Chowk Jhapa</p>
           <p className="text-sm opacity-90">Open daily · 9 AM – 11 PM</p>
           <p className="text-sm opacity-90 mt-2">+977 98-0000-0000</p>
         </div>
