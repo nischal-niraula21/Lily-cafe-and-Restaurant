@@ -80,6 +80,8 @@ function CabinsPage() {
           alt="Private cabin"
           width={1280}
           height={896}
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-black/40" />
