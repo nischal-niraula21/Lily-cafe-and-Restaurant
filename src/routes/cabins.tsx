@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useMemo, useState } from "react";
-import cabinImg from "@/assets/cabin.jpg";
-import cabinC1 from "@/assets/cabin-c1.jpg";
-import cabinC2 from "@/assets/cabin-c2.jpg";
-import cabinC3 from "@/assets/cabin-c3.jpg";
-import cabinC4 from "@/assets/cabin-c4.jpg";
-import cabinC5 from "@/assets/cabin-c5.jpg";
+import cabinImg from "@/assets/cabin.webp";
+import cabinC1 from "@/assets/cabin-c1.webp";
+import cabinC2 from "@/assets/cabin-c2.webp";
+import cabinC3 from "@/assets/cabin-c3.webp";
+import cabinC4 from "@/assets/cabin-c4.webp";
+import cabinC5 from "@/assets/cabin-c5.webp";
 import { Check, Users } from "lucide-react";
 import { useBookings, setCabinBooked, type CabinId } from "@/lib/bookings";
 import { toast } from "sonner";
