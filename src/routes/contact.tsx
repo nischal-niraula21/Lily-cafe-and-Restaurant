@@ -34,8 +34,8 @@ function ContactPage() {
         <div className="mt-14 grid md:grid-cols-2 gap-10">
           <div className="space-y-6">
             {[
-              { icon: MapPin, label: "Location", value: "Main Street, City Center" },
-              { icon: Phone, label: "Phone", value: "+977 98-0000-0000" },
+              { icon: MapPin, label: "Location", value: "Lekhnath Chowk, Chandragadhi, Jhapa" },
+              { icon: Phone, label: "Phone", value: "+977 9825983379" },
               { icon: Clock, label: "Open Daily", value: "9:00 AM – 11:00 PM" },
             ].map((i) => (
               <div key={i.label} className="flex gap-4 items-start p-6 rounded-2xl bg-card border border-border shadow-[var(--shadow-soft)]">
