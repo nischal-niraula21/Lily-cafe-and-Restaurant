@@ -193,11 +193,19 @@
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  padding: 2.5rem 2rem;
+  padding: 1.25rem 1rem;
   overflow: hidden;
   border-radius: inherit;
   background:
     linear-gradient(135deg, oklch(0.98 0.015 80), oklch(0.94 0.03 75));
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .flipbook-page .page-front,
+  .flipbook-page .page-back {
+    padding: 2.5rem 2rem;
+  }
 }
 
 .flipbook-page .page-front,
