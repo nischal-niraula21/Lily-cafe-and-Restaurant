@@ -186,10 +186,10 @@
   transition: transform 0.7s cubic-bezier(0.65, 0.05, 0.36, 1);
   will-change: transform;
   contain: paint;
-  background: linear-gradient(135deg, oklch(0.96 0.02 85), oklch(0.9 0.03 80));
+  background: linear-gradient(150deg, oklch(0.17 0.008 60), oklch(0.11 0.005 60));
   box-shadow: var(--shadow-page);
   border-radius: 4px 14px 14px 4px;
-  color: oklch(0.18 0.01 60);
+  color: var(--cream);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -215,9 +215,12 @@
   padding: 1.25rem 1rem;
   overflow: hidden;
   border-radius: inherit;
-  background:
-    linear-gradient(135deg, oklch(0.98 0.015 80), oklch(0.94 0.03 75));
   -webkit-overflow-scrolling: touch;
+  background:
+    radial-gradient(circle at 20% 10%, color-mix(in oklab, var(--gold) 10%, transparent), transparent 55%),
+    linear-gradient(150deg, oklch(0.18 0.008 60), oklch(0.1 0.004 60));
+  color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--gold) 22%, transparent);
 }
 
 @media (min-width: 640px) {
@@ -227,35 +230,23 @@
   }
 }
 
-.flipbook-page .page-front,
-.flipbook-page .page-back {
-  background:
-    linear-gradient(135deg, oklch(0.96 0.02 85), oklch(0.9 0.03 80));
-  color: oklch(0.18 0.01 60);
-}
-
-/* Force dark text inside the cream-colored flipbook pages,
-   overriding Tailwind tokens that target the dark site theme. */
 .flipbook-page .page-front .text-foreground,
 .flipbook-page .page-back .text-foreground {
-  color: oklch(0.18 0.01 60);
+  color: var(--cream);
 }
 .flipbook-page .page-front .text-muted-foreground,
 .flipbook-page .page-back .text-muted-foreground {
-  color: oklch(0.42 0.015 65);
+  color: color-mix(in oklab, var(--cream) 62%, transparent);
 }
 .flipbook-page .page-front .text-primary,
 .flipbook-page .page-back .text-primary {
-  color: oklch(0.45 0.12 35);
+  color: var(--gold);
 }
 .flipbook-page .page-front .text-accent,
 .flipbook-page .page-back .text-accent {
-  color: oklch(0.55 0.14 40);
+  color: var(--gold);
 }
-.flipbook-page .page-front .border-accent\/30,
-.flipbook-page .page-front .border-accent\/40 {
-  border-color: oklch(0.55 0.14 40 / 0.4);
-}
+
 
 .flipbook-page .page-back {
   transform: rotateY(180deg);

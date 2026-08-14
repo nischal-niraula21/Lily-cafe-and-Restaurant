@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import logo from "@/assets/lily-logo.jpg";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -288,21 +289,30 @@ function PageFace({ index, side }: { index: number; side: "front" | "back" }) {
       <div className={`page-${side} flex flex-col items-center justify-center text-center`}>
         {side === "front" ? (
           <>
-            <div className="absolute inset-6 rounded-lg border-2 border-accent/40" />
-            <p className="font-script text-6xl md:text-7xl text-accent">Lily</p>
-            <div className="mt-2 text-sm tracking-[0.3em] uppercase text-muted-foreground">
+            <div className="absolute inset-4 sm:inset-6 rounded-lg border border-accent/40" />
+            <div className="absolute inset-[1.1rem] sm:inset-7 rounded-md border border-accent/20" />
+            <img
+              src={logo}
+              alt="Lily Cafe & Restaurant logo"
+              className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover ring-2 ring-accent/50 shadow-lg"
+            />
+            <p className="font-script text-5xl md:text-6xl text-accent mt-4">Lily</p>
+            <div className="mt-1 text-[10px] sm:text-sm tracking-[0.35em] uppercase text-muted-foreground">
               Cafe & Restaurant
             </div>
-            <div className="mt-10 text-2xl md:text-3xl font-display">The Menu</div>
-            <p className="mt-6 max-w-sm text-muted-foreground italic">
+            <div className="mt-6 h-px w-24 bg-accent/40" />
+            <div className="mt-6 text-xl md:text-2xl font-display tracking-[0.25em] uppercase">
+              The Menu
+            </div>
+            <p className="mt-4 max-w-sm text-muted-foreground italic text-sm">
               "A cozy place for food & privacy"
             </p>
-            <div className="mt-10 text-xs tracking-[0.3em] uppercase text-muted-foreground">
+            <div className="mt-8 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
               Click page or arrow →
             </div>
           </>
         ) : (
-          <div className="text-muted-foreground/40 font-script text-5xl">Lily</div>
+          <img src={logo} alt="" className="h-16 w-16 rounded-full object-cover opacity-20" />
         )}
       </div>
     );
@@ -314,21 +324,29 @@ function PageFace({ index, side }: { index: number; side: "front" | "back" }) {
   if (side === "back") {
     return (
       <div className="page-back flex items-center justify-center">
-        <div className="text-muted-foreground/30 font-script text-4xl">Lily</div>
+        <img src={logo} alt="" className="h-16 w-16 rounded-full object-cover opacity-15" />
       </div>
     );
   }
 
   return (
     <div className="page-front flex flex-col">
-      <div className="border-b border-accent/30 pb-2 sm:pb-3">
-        <p className="font-script text-2xl sm:text-3xl text-accent">{page.title}</p>
-        {page.subtitle && (
-          <p className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-muted-foreground mt-1">
-            {page.subtitle}
-          </p>
-        )}
+      <div className="flex items-center gap-3 border-b border-accent/30 pb-2 sm:pb-3">
+        <img
+          src={logo}
+          alt=""
+          className="h-9 w-9 sm:h-11 sm:w-11 rounded-full object-cover ring-1 ring-accent/40 shrink-0"
+        />
+        <div className="min-w-0">
+          <p className="font-script text-2xl sm:text-3xl text-accent leading-tight">{page.title}</p>
+          {page.subtitle && (
+            <p className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-muted-foreground mt-0.5">
+              {page.subtitle}
+            </p>
+          )}
+        </div>
       </div>
+
       <ul className="mt-3 sm:mt-5 space-y-2 sm:space-y-3 flex-1 min-h-0 overflow-y-auto pr-1">
         {page.items.map((it) => (
           <li key={it.name} className="flex items-baseline gap-2 sm:gap-3 text-sm sm:text-base">
