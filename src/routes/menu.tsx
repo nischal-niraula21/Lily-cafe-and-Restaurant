@@ -240,14 +240,36 @@ function MenuPage() {
           <button
             onClick={next}
             disabled={current === maxIndex}
-            className="rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-soft)] p-3 hover:bg-primary/90 transition disabled:opacity-30"
+            className="hidden sm:inline-flex rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-soft)] p-3 hover:bg-primary/90 transition disabled:opacity-30"
             aria-label="Next page"
           >
             <ChevronRight className="size-5" />
           </button>
         </div>
 
-        <div className="mt-6 text-center text-sm text-muted-foreground">
+        <div className="mt-6 flex items-center justify-center gap-4 sm:hidden">
+          <button
+            onClick={prev}
+            disabled={current === 0}
+            className="rounded-full bg-card border border-border p-3 disabled:opacity-30"
+            aria-label="Previous page"
+          >
+            <ChevronLeft className="size-5" />
+          </button>
+          <span className="text-sm text-muted-foreground">
+            {current} / {maxIndex}
+          </span>
+          <button
+            onClick={next}
+            disabled={current === maxIndex}
+            className="rounded-full bg-primary text-primary-foreground p-3 disabled:opacity-30"
+            aria-label="Next page"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+        </div>
+
+        <div className="mt-6 hidden sm:block text-center text-sm text-muted-foreground">
           Page {current} / {maxIndex}
         </div>
       </section>
