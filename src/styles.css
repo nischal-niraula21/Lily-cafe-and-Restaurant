@@ -144,7 +144,14 @@
     background-image:
       radial-gradient(circle at 15% 20%, color-mix(in oklab, var(--gold) 8%, transparent), transparent 50%),
       radial-gradient(circle at 85% 80%, color-mix(in oklab, var(--gold) 6%, transparent), transparent 55%);
-    background-attachment: fixed;
+    background-attachment: scroll;
+    text-rendering: optimizeSpeed;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      background-attachment: fixed;
+    }
   }
 
   h1, h2, h3, h4 {
