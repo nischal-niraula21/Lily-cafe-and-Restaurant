@@ -192,18 +192,18 @@ function MenuPage() {
           </p>
         </div>
 
-        <div className="mt-12 flex items-center justify-center gap-4">
+        <div className="mt-12 flex items-center justify-center gap-2 sm:gap-4">
           <button
             onClick={prev}
             disabled={current === 0}
-            className="rounded-full bg-card shadow-[var(--shadow-soft)] border border-border p-3 hover:bg-accent hover:text-accent-foreground transition disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-foreground"
+            className="hidden sm:inline-flex rounded-full bg-card shadow-[var(--shadow-soft)] border border-border p-3 hover:bg-accent hover:text-accent-foreground transition disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-foreground"
             aria-label="Previous page"
           >
             <ChevronLeft className="size-5" />
           </button>
 
           <div
-            className="flipbook relative w-full max-w-3xl aspect-[3/4] md:aspect-[4/3]"
+            className="flipbook relative w-full max-w-3xl h-[78vh] min-h-[520px] md:h-auto md:min-h-0 md:aspect-[4/3]"
           >
             {/* Stacked pages */}
             {Array.from({ length: totalPages }).map((_, i) => {
