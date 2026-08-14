@@ -321,27 +321,27 @@ function PageFace({ index, side }: { index: number; side: "front" | "back" }) {
 
   return (
     <div className="page-front flex flex-col">
-      <div className="border-b border-accent/30 pb-3">
-        <p className="font-script text-3xl text-accent">{page.title}</p>
+      <div className="border-b border-accent/30 pb-2 sm:pb-3">
+        <p className="font-script text-2xl sm:text-3xl text-accent">{page.title}</p>
         {page.subtitle && (
-          <p className="text-xs tracking-[0.25em] uppercase text-muted-foreground mt-1">
+          <p className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-muted-foreground mt-1">
             {page.subtitle}
           </p>
         )}
       </div>
-      <ul className="mt-5 space-y-3 overflow-auto">
+      <ul className="mt-3 sm:mt-5 space-y-2 sm:space-y-3 flex-1 min-h-0 overflow-y-auto pr-1">
         {page.items.map((it) => (
-          <li key={it.name} className="flex items-baseline gap-3">
-            <span className="font-medium text-foreground">{it.name}</span>
+          <li key={it.name} className="flex items-baseline gap-2 sm:gap-3 text-sm sm:text-base">
+            <span className="font-medium text-foreground min-w-0">{it.name}</span>
             <span className="flex-1 border-b border-dotted border-muted-foreground/40 translate-y-[-4px]" />
-            <span className="text-primary font-semibold">Rs {it.price}</span>
+            <span className="text-primary font-semibold shrink-0">Rs {it.price}</span>
             {it.note && (
               <span className="sr-only">{it.note}</span>
             )}
           </li>
         ))}
       </ul>
-      <div className="mt-auto pt-4 text-right text-xs text-muted-foreground font-script text-xl">
+      <div className="pt-2 sm:pt-4 text-right text-muted-foreground font-script text-base sm:text-xl">
         — page {index} —
       </div>
     </div>
