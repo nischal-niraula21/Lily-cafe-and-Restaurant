@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import logo from "@/assets/lily-logo.jpg";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
