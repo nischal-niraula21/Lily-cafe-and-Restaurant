@@ -95,6 +95,32 @@ function ContactPage() {
             )}
           </form>
         </div>
+
+        <div className="mt-14">
+          <h2 className="text-3xl text-center">Find us on the map</h2>
+          <p className="text-center text-muted-foreground mt-2">
+            Lekhnath Chowk, Chandragadhi, Jhapa, Nepal
+          </p>
+          <div className="mt-6 overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+            <iframe
+              title="Map of Lily Cafe & Restaurant, Chandragadhi, Jhapa, Nepal"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=87.9800%2C26.6300%2C88.0300%2C26.6700&layer=mapnik&marker=26.6500%2C88.0050"
+              className="w-full h-[380px] md:h-[440px] border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <div className="mt-4 text-center">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Chandragadhi%2C%20Jhapa%2C%20Nepal"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm hover:bg-secondary transition"
+            >
+              <MapPin className="size-4 text-primary" /> Open in Google Maps
+            </a>
+          </div>
+        </div>
       </section>
     </Layout>
   );
