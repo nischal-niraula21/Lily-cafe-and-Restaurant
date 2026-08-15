@@ -112,7 +112,7 @@ function ContactPage() {
           </div>
           <div className="mt-4 text-center">
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Lekhnath%20Chowk%2C%20Chandragadhi%2C%20Jhapa%2C%20Nepal"
+              href="https://www.google.com/maps/search/?api=1&query=26.5691%2C88.0656"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm hover:bg-secondary transition"
