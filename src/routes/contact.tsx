@@ -103,8 +103,8 @@ function ContactPage() {
           </p>
           <div className="mt-6 overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <iframe
-              title="Map of Lily Cafe & Restaurant, Chandragadhi, Jhapa, Nepal"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=88.0667%2C26.5183%2C88.1167%2C26.5683&layer=mapnik&marker=26.5433%2C88.0917"
+              title="Map of Lily Cafe & Restaurant, Lekhnath Chowk, Chandragadhi, Jhapa, Nepal"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=88.0456%2C26.5591%2C88.0856%2C26.5792&layer=mapnik&marker=26.5691%2C88.0656"
               className="w-full h-[380px] md:h-[440px] border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
