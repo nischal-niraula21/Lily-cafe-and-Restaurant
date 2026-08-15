@@ -232,18 +232,24 @@ function MenuPage() {
             {/* Stacked pages */}
             {Array.from({ length: totalPages }).map((_, i) => {
               const flipped = i < current;
-              const zIndex = totalPages - i;
+              const isFlipping = flipping === i;
+              const zIndex = isFlipping
+                ? totalPages + 10
+                : flipped
+                  ? i
+                  : totalPages - i;
               return (
                 <div
                   key={i}
                   className={`flipbook-page select-none ${flipped ? "flipped" : ""}`}
-                  style={{ zIndex: flipped ? i : zIndex }}
+                  style={{ zIndex }}
                 >
                   <PageFace index={i} side="front" />
                   <PageFace index={i} side="back" />
                 </div>
               );
             })}
+
             {/* Click zones for page turn */}
             <button
               type="button"
