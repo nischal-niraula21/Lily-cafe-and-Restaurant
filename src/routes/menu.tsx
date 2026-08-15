@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import logo from "@/assets/lily-logo.jpg";
 
@@ -176,11 +176,34 @@ const pages: PageContent[] = [
 
 function MenuPage() {
   const [current, setCurrent] = useState(0);
+  const [flipping, setFlipping] = useState<number | null>(null);
+  const flipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const totalPages = pages.length + 1; // cover + pages
   const maxIndex = totalPages - 1;
 
-  const next = () => setCurrent((c) => Math.min(c + 1, maxIndex));
-  const prev = () => setCurrent((c) => Math.max(c - 1, 0));
+  const markFlipping = (index: number) => {
+    if (flipTimer.current) clearTimeout(flipTimer.current);
+    setFlipping(index);
+    flipTimer.current = setTimeout(() => setFlipping(null), 750);
+  };
+
+  useEffect(() => () => {
+    if (flipTimer.current) clearTimeout(flipTimer.current);
+  }, []);
+
+  const next = () =>
+    setCurrent((c) => {
+      if (c >= maxIndex) return c;
+      markFlipping(c);
+      return c + 1;
+    });
+  const prev = () =>
+    setCurrent((c) => {
+      if (c <= 0) return c;
+      markFlipping(c - 1);
+      return c - 1;
+    });
+
 
   return (
     <Layout>
@@ -209,18 +232,24 @@ function MenuPage() {
             {/* Stacked pages */}
             {Array.from({ length: totalPages }).map((_, i) => {
               const flipped = i < current;
-              const zIndex = totalPages - i;
+              const isFlipping = flipping === i;
+              const zIndex = isFlipping
+                ? totalPages + 10
+                : flipped
+                  ? i
+                  : totalPages - i;
               return (
                 <div
                   key={i}
                   className={`flipbook-page select-none ${flipped ? "flipped" : ""}`}
-                  style={{ zIndex: flipped ? i : zIndex }}
+                  style={{ zIndex }}
                 >
                   <PageFace index={i} side="front" />
                   <PageFace index={i} side="back" />
                 </div>
               );
             })}
+
             {/* Click zones for page turn */}
             <button
               type="button"
