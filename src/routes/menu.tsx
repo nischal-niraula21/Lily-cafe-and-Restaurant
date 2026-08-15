@@ -176,11 +176,34 @@ const pages: PageContent[] = [
 
 function MenuPage() {
   const [current, setCurrent] = useState(0);
+  const [flipping, setFlipping] = useState<number | null>(null);
+  const flipTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const totalPages = pages.length + 1; // cover + pages
   const maxIndex = totalPages - 1;
 
-  const next = () => setCurrent((c) => Math.min(c + 1, maxIndex));
-  const prev = () => setCurrent((c) => Math.max(c - 1, 0));
+  const markFlipping = (index: number) => {
+    if (flipTimer.current) clearTimeout(flipTimer.current);
+    setFlipping(index);
+    flipTimer.current = setTimeout(() => setFlipping(null), 750);
+  };
+
+  useEffect(() => () => {
+    if (flipTimer.current) clearTimeout(flipTimer.current);
+  }, []);
+
+  const next = () =>
+    setCurrent((c) => {
+      if (c >= maxIndex) return c;
+      markFlipping(c);
+      return c + 1;
+    });
+  const prev = () =>
+    setCurrent((c) => {
+      if (c <= 0) return c;
+      markFlipping(c - 1);
+      return c - 1;
+    });
+
 
   return (
     <Layout>
